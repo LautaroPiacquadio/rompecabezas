@@ -40,11 +40,13 @@ function mostrarCartelGanador() {
 
 // Intercambia posiciones grilla y en el DOM
 function intercambiarPosiciones(fila1, columna1, fila2, columna2) {
+    // Intercambio la posicion en la grilla
     var posicionActual = grilla[fila1][columna1];
     var posicionACambiar = grilla[fila2][columna2];
     grilla[fila1][columna1] = posicionACambiar;
     grilla[fila2][columna2] = posicionActual;
 
+    // Intercambio la posicion en el DOM
     var piezaActual = document.getElementById('pieza' + posicionActual);
     var piezaACambiar = document.getElementById('pieza' + posicionACambiar);
     var padre =  piezaActual.parentNode;
@@ -89,9 +91,13 @@ function moverEnDireccion(direccion) {
         nuevaColumnaPiezaVacia = posicionVacia.columna - 1; // Intercambia pieza blanca con la pieza que está a su izq
     }
 
+    // Si la fila es mayor a 2 (esta fuera de la tabla), la cambio por la posicion 0 (primera posicion de la tabla)
     nuevaFilaPiezaVacia = nuevaFilaPiezaVacia > 2 ? 0 : nuevaFilaPiezaVacia;
+    // Si la fila es menor a 0 (esta fuera de la tabla), la cambio por la posicion 2 (ultima posicion de la tabla)
     nuevaFilaPiezaVacia = nuevaFilaPiezaVacia < 0 ? 2 : nuevaFilaPiezaVacia;
+    // Si la columna es mayor a 2 (esta fuera de la tabla), la cambio por la posicion 0 (primera posicion de la tabla)
     nuevaColumnaPiezaVacia = nuevaColumnaPiezaVacia > 2 ? 0 : nuevaColumnaPiezaVacia;
+    // Si la columna es menor a 0 (esta fuera de la tabla), la cambio por la posicion 2 (ultima posicion de la tabla)
     nuevaColumnaPiezaVacia = nuevaColumnaPiezaVacia < 0 ? 2 : nuevaColumnaPiezaVacia;
 
     // Se chequea si la nueva posición es válida, si lo es, se intercambia
