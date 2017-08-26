@@ -39,13 +39,31 @@ function mostrarCartelGanador() {
 }
 
 // Intercambia posiciones grilla y en el DOM
-function intercambiarPosiciones(fila1, columna1, fila2, columna2) {}
+function intercambiarPosiciones(fila1, columna1, fila2, columna2) {
+    var posicionActual = grilla[fila1][columna1];
+    var posicionACambiar = grilla[fila2][columna2];
+    grilla[fila1][columna1] = posicionACambiar;
+    grilla[fila2][columna2] = posicionActual;
+
+    var piezaActual = document.getElementById('pieza' + posicionActual);
+    var piezaACambiar = document.getElementById('pieza' + posicionACambiar);
+    var padre =  piezaActual.parentNode;
+    padre.replaceChild(piezaActual.cloneNode(true), piezaACambiar);
+    padre.replaceChild(piezaACambiar.cloneNode(true), piezaActual);
+}
 
 // Actualiza la posición de la pieza vacía
-function actualizarPosicionVacia(nuevaFila, nuevaColumna) {}
+function actualizarPosicionVacia(nuevaFila, nuevaColumna) {
+    posicionVacia = {
+        fila: nuevaFila,
+        columna: nuevaColumna
+    };
+}
 
 // Para chequear si la posicón está dentro de la grilla.
-function posicionValida(fila, columna) {}
+function posicionValida(fila, columna) {
+    return ((fila >= 0 && columna >= 0) && (fila < 3 && columna < 3));
+}
 
 // Movimiento de fichas, en este caso la que se mueve es la blanca intercambiando
 // su posición con otro elemento
@@ -54,23 +72,27 @@ function moverEnDireccion(direccion) {
     var nuevaFilaPiezaVacia;
     var nuevaColumnaPiezaVacia;
 
-    // Intercambia pieza blanca con la pieza que está arriba suyo
     if (direccion == 40) {
-        nuevaFilaPiezaVacia = posicionVacia.fila - 1;
-        nuevaColumnaPiezaVacia = posicionVacia.// Intercambia pieza blanca con la pieza que está abajo suyo
-        columna;
-    } else if (direccion == 38) {
         nuevaFilaPiezaVacia = posicionVacia.fila + 1;
-        nuevaColumnaPiezaVacia = posicionVacia.// Intercambia pieza blanca con la pieza que está a su izq
-        columna;
+        nuevaColumnaPiezaVacia = posicionVacia.columna; // Intercambia pieza blanca con la pieza que está abajo suyo
+    } else if (direccion == 38) {
+        nuevaFilaPiezaVacia = posicionVacia.fila - 1;
+        nuevaColumnaPiezaVacia = posicionVacia.columna; // Intercambia pieza blanca con la pieza que está arriba suyo
 
-    } else if (direccion == 39)// Intercambia pieza blanca con la pieza que está a su der
+    } else if (direccion == 39)
     {
-        // Completar
+        nuevaFilaPiezaVacia = posicionVacia.fila;
+        nuevaColumnaPiezaVacia = posicionVacia.columna + 1; // Intercambia pieza blanca con la pieza que está a su der
 
     } else if (direccion == 37) {
-        // Completar
+        nuevaFilaPiezaVacia = posicionVacia.fila;
+        nuevaColumnaPiezaVacia = posicionVacia.columna - 1; // Intercambia pieza blanca con la pieza que está a su izq
     }
+
+    nuevaFilaPiezaVacia = nuevaFilaPiezaVacia > 2 ? 0 : nuevaFilaPiezaVacia;
+    nuevaFilaPiezaVacia = nuevaFilaPiezaVacia < 0 ? 2 : nuevaFilaPiezaVacia;
+    nuevaColumnaPiezaVacia = nuevaColumnaPiezaVacia > 2 ? 0 : nuevaColumnaPiezaVacia;
+    nuevaColumnaPiezaVacia = nuevaColumnaPiezaVacia < 0 ? 2 : nuevaColumnaPiezaVacia;
 
     // Se chequea si la nueva posición es válida, si lo es, se intercambia
     if (posicionValida(nuevaFilaPiezaVacia, nuevaColumnaPiezaVacia)) {
