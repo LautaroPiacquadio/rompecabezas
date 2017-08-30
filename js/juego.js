@@ -36,6 +36,7 @@ function chequearSiGano() {
 // esta función
 function mostrarCartelGanador() {
     alert('Ganaste!');
+    iniciar();
 }
 
 // Intercambia posiciones grilla y en el DOM
@@ -64,7 +65,7 @@ function actualizarPosicionVacia(nuevaFila, nuevaColumna) {
 
 // Para chequear si la posicón está dentro de la grilla.
 function posicionValida(fila, columna) {
-    return ((fila >= 0 && columna >= 0) && (fila < 3 && columna < 3));
+    return fila >= 0 && columna >= 0 && fila < 3 && columna < 3;
 }
 
 // Movimiento de fichas, en este caso la que se mueve es la blanca intercambiando
@@ -90,15 +91,6 @@ function moverEnDireccion(direccion) {
         nuevaFilaPiezaVacia = posicionVacia.fila;
         nuevaColumnaPiezaVacia = posicionVacia.columna - 1; // Intercambia pieza blanca con la pieza que está a su izq
     }
-
-    // Si la fila es mayor a 2 (esta fuera de la tabla), la cambio por la posicion 0 (primera posicion de la tabla)
-    nuevaFilaPiezaVacia = nuevaFilaPiezaVacia > 2 ? 0 : nuevaFilaPiezaVacia;
-    // Si la fila es menor a 0 (esta fuera de la tabla), la cambio por la posicion 2 (ultima posicion de la tabla)
-    nuevaFilaPiezaVacia = nuevaFilaPiezaVacia < 0 ? 2 : nuevaFilaPiezaVacia;
-    // Si la columna es mayor a 2 (esta fuera de la tabla), la cambio por la posicion 0 (primera posicion de la tabla)
-    nuevaColumnaPiezaVacia = nuevaColumnaPiezaVacia > 2 ? 0 : nuevaColumnaPiezaVacia;
-    // Si la columna es menor a 0 (esta fuera de la tabla), la cambio por la posicion 2 (ultima posicion de la tabla)
-    nuevaColumnaPiezaVacia = nuevaColumnaPiezaVacia < 0 ? 2 : nuevaColumnaPiezaVacia;
 
     // Se chequea si la nueva posición es válida, si lo es, se intercambia
     if (posicionValida(nuevaFilaPiezaVacia, nuevaColumnaPiezaVacia)) {
