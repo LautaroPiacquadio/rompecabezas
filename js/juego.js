@@ -1,3 +1,16 @@
+var movimientos = [];
+var resolviendo = false;
+
+function resolver() {
+    resolviendo = true;
+    movimientos = movimientos.reverse();
+    movimientos.forEach(movimiento => {
+        moverEnDireccion(movimiento);
+    })
+    resolviendo = false;
+    movimientos = [];
+}
+
 // Representación de la grilla. Cada nro representa a una pieza.
 // El 9 es la posición vacía
 var grilla = [
@@ -81,12 +94,9 @@ function moverEnDireccion(direccion) {
     } else if (direccion == 38) {
         nuevaFilaPiezaVacia = posicionVacia.fila - 1;
         nuevaColumnaPiezaVacia = posicionVacia.columna; // Intercambia pieza blanca con la pieza que está arriba suyo
-
-    } else if (direccion == 39)
-    {
+    } else if (direccion == 39) {
         nuevaFilaPiezaVacia = posicionVacia.fila;
         nuevaColumnaPiezaVacia = posicionVacia.columna + 1; // Intercambia pieza blanca con la pieza que está a su der
-
     } else if (direccion == 37) {
         nuevaFilaPiezaVacia = posicionVacia.fila;
         nuevaColumnaPiezaVacia = posicionVacia.columna - 1; // Intercambia pieza blanca con la pieza que está a su izq
@@ -94,6 +104,20 @@ function moverEnDireccion(direccion) {
 
     // Se chequea si la nueva posición es válida, si lo es, se intercambia
     if (posicionValida(nuevaFilaPiezaVacia, nuevaColumnaPiezaVacia)) {
+        if (!resolviendo) {
+            if (direccion == 40) {
+                movimientos.push(38);
+            }
+            if (direccion == 38) {
+                movimientos.push(40);
+            }
+            if (direccion == 39) {
+                movimientos.push(37);
+            }
+            if (direccion == 37) {
+                movimientos.push(39);
+            }
+        }
         intercambiarPosiciones(posicionVacia.fila, posicionVacia.columna, nuevaFilaPiezaVacia, nuevaColumnaPiezaVacia);
         actualizarPosicionVacia(nuevaFilaPiezaVacia, nuevaColumnaPiezaVacia);
     }
